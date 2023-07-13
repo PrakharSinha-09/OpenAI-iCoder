@@ -9,12 +9,23 @@
   </head>
   <body>
     <div id="app">
-      <div id="chat_container"></div>
+      <div id="upper">
+        <h2 style="color: white;">iCODER : <i>JustAsk!</i> 🤖</h2>
 
-      <form>
-        <textarea name="prompt" id="" cols="1" rows="1" placeholder="Ask iCODER..."></textarea>
-        <button type="submit"><img src="./assets/send.svg" alt="Send" />
-      </form>
+      </div>
+      <div id="chat_container" style="display: none; margin-top: 50px;"></div>
+      <div id="intro">
+        <h3 class="animate-charcter"> iCODER</h3>
+        <p>Leverage The Power Of AI To Enhance Your Productivity To The Moon🚀</p>
+      </div>
+
+      <div id="form">
+        <form>
+          <textarea name="prompt" id="" cols="1" rows="1" placeholder="Ask iCODER..."></textarea>
+          <button type="submit"><img src="./assets/send-svgrepo-com.svg" alt="Send" />
+        </form>
+
+      </div>
     </div>
     <script type="module" src="/script.js"></script>
   </body>

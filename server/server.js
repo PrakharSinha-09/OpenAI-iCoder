@@ -31,10 +31,10 @@ app.post('/',async(req,res)=>{
         const prompt=req.body.prompt;
 
         const response=await openai.createCompletion({
-            model: "text-davinci-edit-001",
+            model: "text-davinci-003",
             prompt: `${prompt}`,
             temperature: 0,                         //A measure of randomness
-            max_tokens: 64,
+            max_tokens: 1000,
             top_p: 1,
             frequency_penalty: 0.5,                 //this will ensure that our ai don't provide similar solutions to the same question
             presence_penalty: 0,
@@ -45,7 +45,7 @@ app.post('/',async(req,res)=>{
             bot:response.data.choices[0].text
         })
     }
-    catch(error){
+    catch(error){ 
         console.log(error);
         res.status(500).send({error})
     }

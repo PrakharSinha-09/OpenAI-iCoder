@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@100;300;400;500;700;800;900&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 * {
   margin: 0;
   padding: 0;
@@ -8,20 +8,74 @@
 }
 
 body {
-  background: #343541;
+  background: #000000;
+}
+
+h3{
+  margin-top: 15px;
+}
+
+#form{
+  position: fixed;
+  width: 100%;
+  bottom: 10px;
+  /* border: 3px solid #8AC007; */
+}
+
+#upper{
+  position: fixed;
+  /* width: 100%; */
+  top: 10px;
 }
 
 #app {
   width: 100vw;
-  height: 100vh;
-  background: #343541;
-
+  height: 95vh;
+  background: #000000;
+  /* gap: 30px; */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+}
+/* #intro h1{
+  font-size: 200px;
+} */
+#intro p{
+  color: white;
+  font-size: 15px;
+  font-family: 'Dancing Script', cursive;
+  letter-spacing: 1px;
 }
 
+.animate-charcter
+{
+   /* text-transform: uppercase; */
+  background-image: linear-gradient(
+    -225deg,
+    #000000 0%,
+    #000000 29%,
+    #ff1313 67%,
+    #000000 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+      font-size: 120px;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
 #chat_container {
   flex: 1;
   width: 100%;
@@ -50,7 +104,7 @@ body {
 }
 
 .ai {
-  background: #40414F;
+  background: #000000;
 }
 
 .chat {
@@ -117,8 +171,8 @@ form {
   max-width: 1280px;
   margin: 0 auto;
   padding: 10px;
-  background: #40414F;
-
+  background: #343541;
+  border-radius: 20px;
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -126,10 +180,8 @@ form {
 
 textarea {
   width: 100%;
-
   color: #fff;
   font-size: 18px;
-
   padding: 10px;
   background: transparent;
   border-radius: 5px;
@@ -148,3 +200,4 @@ form img {
   width: 30px;
   height: 30px;
 }
+
