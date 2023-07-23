@@ -62,12 +62,62 @@ function chatStripe(isAi, value, uniqueId) {
     )
 }
 
+
+let micon=document.querySelector("#micOn")
+let micoff=document.querySelector("#micOff")
+const field=document.getElementsByTagName('textarea')[0]
+let recognition;
+
+if ('webkitSpeechRecognition' in window) 
+{
+  recognition = new webkitSpeechRecognition();
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.lang = 'en-US';
+
+  micon.addEventListener('click', startRecognition);
+  micoff.addEventListener('click', stopRecognition);
+} 
+else {
+  outputDiv.innerHTML = 'Speech recognition is not supported in your browser.';
+}
+
+function startRecognition() {
+    recognition.start();
+    micon.style.display='none'
+    micoff.style.display='inline'
+    field.placeholder="Speak Now... Recognising"
+    field.disabled=true
+  }
+  
+  function stopRecognition() {
+    recognition.stop();
+    micon.style.display='inline'
+    micoff.style.display='none'
+    field.placeholder="Ask iCODER..."
+    field.disabled=false
+  }
+
+  recognition.onresult = function (event) {
+    let transcript = '';
+    for (let i = event.resultIndex; i < event.results.length; ++i) {
+      if (event.results[i].isFinal) {
+        transcript += event.results[i][0].transcript;
+      }
+    }
+    field.value = transcript;
+  };
+
 const intro=document.querySelector("#intro")
+
 const handleSubmit = async (e) => {
     e.preventDefault()
 
     intro.style.display="none"
     chatContainer.style.display="block"
+
+    field.placeholder="Ask  iCODER..."
+    stopRecognition()
 
     const data = new FormData(form)
 
@@ -76,6 +126,8 @@ const handleSubmit = async (e) => {
 
     // to clear the textarea input 
     form.reset()
+    // document.querySelector("#prompt").value= '';
+    // micControl(false);
 
     // bot's chatstripe
     const uniqueId = generateUniqueId()
@@ -84,13 +136,13 @@ const handleSubmit = async (e) => {
     // to focus scroll to the bottom 
     chatContainer.scrollTop = chatContainer.scrollHeight;
 
-    // specific message div 
+    // this will get the specific message div 
     const messageDiv = document.getElementById(uniqueId)
 
     // messageDiv.innerHTML = "..."
     loader(messageDiv)
 
-    const response = await fetch('https://icoder-r4ct.onrender.com', {
+    const response = await fetch('http://localhost:5000', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -106,7 +158,7 @@ const handleSubmit = async (e) => {
 
     if (response.ok) {
         const data = await response.json();                //this will give us actual response coming from the backend, but we need to parse it, which is @ next line
-        const parsedData = data.bot.trim() // trims any trailing spaces/'\n' 
+        const parsedData = data.bot.trim()                  // trims any trailing spaces/'\n' 
 
         typeText(messageDiv, parsedData)
     } else {
@@ -115,6 +167,9 @@ const handleSubmit = async (e) => {
         messageDiv.innerHTML = "Something went wrong"
         alert(err)
     }
+
+    recognition.abort();
+    recognition.stop();
 }
 
 form.addEventListener('submit', handleSubmit)
@@ -122,4 +177,6 @@ form.addEventListener('keyup', (e) => {
     if (e.keyCode === 13) {
         handleSubmit(e)
     }
+
+    recognition.abort();
 })
